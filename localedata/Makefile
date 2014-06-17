@@ -45,7 +45,7 @@ vpath %.h tests-mbwc
 
 test-srcs := collate-test xfrm-test tst-fmon tst-rpmatch tst-trans \
 	     tst-mbswcs1 tst-mbswcs2 tst-mbswcs3 tst-mbswcs4 tst-mbswcs5 \
-	     tst-ctype tst-wctype tst-langinfo tst-numeric
+	     tst-ctype tst-wctype tst-langinfo tst-langinfo-static tst-numeric
 test-input := de_DE.ISO-8859-1 en_US.ISO-8859-1 da_DK.ISO-8859-1 \
 	      hr_HR.ISO-8859-2 sv_SE.ISO-8859-1 tr_TR.UTF-8 fr_FR.UTF-8 \
 	      si_LK.UTF-8
@@ -164,7 +164,8 @@ ifeq (y,$(OPTION_EGLIBC_LOCALE_CODE))
 tests: $(objpfx)sort-test.out $(objpfx)tst-fmon.out $(objpfx)tst-locale.out \
        $(objpfx)tst-rpmatch.out $(objpfx)tst-trans.out \
        $(objpfx)tst-mbswcs.out $(objpfx)tst-ctype.out \
-       $(objpfx)tst-langinfo.out $(objpfx)tst-numeric.out
+       $(objpfx)tst-langinfo.out $(objpfx)tst-langinfo-static.out\
+       $(objpfx)tst-numeric.out
 ifeq (y,$(OPTION_POSIX_WIDE_CHAR_DEVICE_IO))
 tests: $(objpfx)tst-wctype.out
 endif
@@ -211,7 +212,11 @@ $(objpfx)tst-wctype.out: tst-wctype.sh $(objpfx)tst-wctype \
 $(objpfx)tst-langinfo.out: tst-langinfo.sh $(objpfx)tst-langinfo \
 			$(objpfx)sort-test.out \
 			$(addprefix $(objpfx),$(CTYPE_FILES))
-	$(SHELL) $< $(common-objpfx) '$(test-program-cmd)'
+	$(SHELL) $< $(common-objpfx) '$(test-program-cmd)' > $@
+$(objpfx)tst-langinfo-static.out: tst-langinfo.sh $(objpfx)tst-langinfo-static \
+			$(objpfx)sort-test.out \
+			$(addprefix $(objpfx),$(CTYPE_FILES))
+	$(SHELL) $< $(common-objpfx) '$(test-program-cmd)' >$@
 $(objpfx)tst-digits.out: $(objpfx)tst-locale.out
 $(objpfx)tst-mbswcs6.out: $(addprefix $(objpfx),$(CTYPE_FILES))
 endif
