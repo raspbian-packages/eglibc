@@ -33,11 +33,16 @@ reboot (int howto)
   if (err)
     return __hurd_fail (EPERM);
 
-  err = __USEPORT (PROC, __proc_getmsgport (port, 1, &init));
-  if (!err)
+  for (pid_t pid = 1; pid < 3; pid++)
     {
-      err = __startup_reboot (init, hostpriv, howto);
-      __mach_port_deallocate (__mach_task_self (), init);
+      err = __USEPORT (PROC, __proc_getmsgport (port, pid, &init));
+      if (!err)
+	{
+	  err = __startup_reboot (init, hostpriv, howto);
+	  __mach_port_deallocate (__mach_task_self (), init);
+	  if (!err)
+	    break;
+	}
     }
 
   __mach_port_deallocate (__mach_task_self (), hostpriv);
