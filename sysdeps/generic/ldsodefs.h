@@ -40,6 +40,7 @@
 #include <hp-timing.h>
 #include <tls.h>
 #include <kernel-features.h>
+#include <gnu/option-groups.h> /* For __OPTION_EGLIBC_RTLD_DEBUG.  */
 
 __BEGIN_DECLS
 
