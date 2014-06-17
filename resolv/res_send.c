@@ -347,7 +347,7 @@ __libc_res_nsend(res_state statp, const u_char *buf, int buflen,
 {
   int gotsomewhere, terrno, try, v_circuit, resplen, ns, n;
 
-	if (statp->nscount == 0) {
+	if ((statp->nscount + EXT(statp).nscount6) == 0) {
 		__set_errno (ESRCH);
 		return (-1);
 	}
@@ -1018,7 +1018,7 @@ send_dg(res_state statp,
 	 */
 	int seconds = (statp->retrans << ns);
 	if (ns > 0)
-		seconds /= statp->nscount;
+		seconds /= (statp->nscount + EXT(statp).nscount6);
 	if (seconds <= 0)
 		seconds = 1;
 	bool single_request_reopen = (statp->options & RES_SNGLKUPREOP) != 0;
