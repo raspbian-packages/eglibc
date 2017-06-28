@@ -1,4 +1,4 @@
-eglibc (2.13-38+rpi2+deb7u11) wheezy-staging; urgency=medium
+eglibc (2.13-38+rpi2+deb7u12) wheezy-staging; urgency=medium
 
   [changes brought forward from 2.13-38+rpi2+deb7u8 by Peter Michael Green <plugwash@raspbian.org> at Sun, 15 Mar 2015 13:59:33 +0000]
   * add some tests to expected failures list. 
@@ -6,7 +6,19 @@ eglibc (2.13-38+rpi2+deb7u11) wheezy-staging; urgency=medium
     http://anonscm.debian.org/viewvc/pkg-glibc?view=revision&revision=5493
     to more thoughroughly cleanup ldconfig caches on upgrade.
 
- -- Raspbian forward porter <root@raspbian.org>  Sat, 04 Jun 2016 14:21:28 +0000
+ -- Raspbian forward porter <root@raspbian.org>  Wed, 28 Jun 2017 12:08:07 +0000
+
+eglibc (2.13-38+deb7u12) wheezy-security; urgency=low
+
+  * debian/patches/any/local-CVE-2017-1000366-rtld-LD_AUDIT.diff,
+    debian/patches/any/local-CVE-2017-1000366-rtld-LD_LIBRARY_PATH.diff,
+    debian/patches/any/local-CVE-2017-1000366-rtld-LD_PRELOAD.diff: add
+    patches to protect the dynamic linker against stack clashes
+    (CVE-2017-1000366).
+  * debian/patches/any/cvs-hwcap-AT_SECURE.diff: patch backported from
+    upstream to disable HWCAP for AT_SECURE programs.
+
+ -- Aurelien Jarno <aurel32@debian.org>  Sat, 17 Jun 2017 14:12:23 +0000
 
 eglibc (2.13-38+deb7u11) wheezy-security; urgency=medium
 
